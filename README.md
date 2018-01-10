@@ -1,4 +1,4 @@
-# cars-and-coffee
+# Eventful
 
 > an application build with Vue + Vuetify + Firebase for car enthusiast
 

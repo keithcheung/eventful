@@ -1,7 +1,7 @@
 {
-  "name": "cars-and-coffee",
+  "name": "Event",
   "version": "1.0.0",
-  "description": "an application build with Vue + Vuetify + Firebase for car enthusiast",
+  "description": "an application build with Vue + Vuetify + Firebase",
   "author": "keithcheung <keith.cheung41@gmail.com>",
   "private": true,
   "scripts": {
