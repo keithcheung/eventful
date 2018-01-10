@@ -13,9 +13,9 @@
         </v-btn>
       </v-toolbar-items>
     </v-toolbar>
+    <!--
     <v-navigation-drawer 
-      v-model="sideNav"
-      temporary>
+      v-model="sideNav">
       <v-list>
         <v-list-tile v-for="item in menuItems" :key="item.title">
           <v-list-tile-action>
@@ -27,8 +27,9 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-
+<tab>-->
     <main>
+      <router-view></router-view>
     </main>
   </v-app>
 </template>
