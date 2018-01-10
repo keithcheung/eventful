@@ -4,16 +4,23 @@
       <v-toolbar-side-icon 
         @click.native.stop="sideNav = !sideNav"
         class="hidden-sm-and-up"></v-toolbar-side-icon>
-      <v-toolbar-title>Cars and Coffee</v-toolbar-title>
+      <v-toolbar-title>
+          <router-link to="/" tag="span" style="cursor: pointer" >Unite</router-link>
+          </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-xs-only">
-        <v-btn flat v-for="item in menuItems" :key="item.title">
-          <v-icon left>{{item.icon}}</v-icon>
-          {{item.title}}
+        <v-btn 
+        flat 
+        v-for="item in menuItems" 
+        :key="item.title"
+        router
+        :to="item.link">
+          <v-icon left>{{ item.icon }}</v-icon>
+          {{ item.title }}
         </v-btn>
       </v-toolbar-items>
     </v-toolbar>
-    <!--
+    <!-- For responsive design
     <v-navigation-drawer 
       v-model="sideNav">
       <v-list>
@@ -40,12 +47,12 @@
       return {
         sideNav: false,
         menuItems: [
-          { icon: 'view_list', title: 'View Meetup' },
-          { icon: 'room', title: 'Organize Meetup' },
-          { icon: 'person', title: 'Profile' },
+          { icon: 'view_list', title: 'View Meetup', link: '/meetups' },
+          { icon: 'room', title: 'Organize Meetup', link: '/meetups/create' },
+          { icon: 'person', title: 'Profile', link: '/profile' },
           // Unauth shouldn't have a sign in or profile
-          { icon: 'face', title: 'Sign Up' },
-          { icon: 'lock_open', title: 'Sign In' }
+          { icon: 'face', title: 'Sign Up', link: '/signup' },
+          { icon: 'lock_open', title: 'Sign In', link: '/signin' }
         ]
       }
     }
