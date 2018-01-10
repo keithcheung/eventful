@@ -4,7 +4,7 @@
       <v-toolbar-side-icon 
         @click.native.stop="sideNav = !sideNav"
         class="hidden-sm-and-up"></v-toolbar-side-icon>
-      <v-toolbar-title>
+      <v-toolbar-title class="ml-4">
           <router-link to="/" tag="span" style="cursor: pointer" >Unite</router-link>
           </v-toolbar-title>
       <v-spacer></v-spacer>
@@ -48,7 +48,7 @@
         sideNav: false,
         menuItems: [
           { icon: 'view_list', title: 'View Meetup', link: '/meetups' },
-          { icon: 'room', title: 'Organize Meetup', link: '/meetups/create' },
+          { icon: 'room', title: 'Organize Meetup', link: '/create' },
           { icon: 'person', title: 'Profile', link: '/profile' },
           // Unauth shouldn't have a sign in or profile
           { icon: 'face', title: 'Sign Up', link: '/signup' },
