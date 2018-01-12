@@ -33,17 +33,14 @@
 
 <script>
   export default {
-    data () {
-      return {
-        meetups: [
-          { imageUrl: 'https://lonelyplanetimages.imgix.net/mastheads/GettyImages-538096543_medium.jpg?sharp=10&vib=20&w=1200', id: 'fghjklkjh', title: 'New York' },
-          { imageUrl: 'http://www.seetorontonow.com/wp-content/uploads/2017/11/toronto-skyline-winter.jpg', id: 'haldjahfjf', title: 'Toronto' }
-        ]
+    computed: {
+      meetups () {
+        return this.$store.getters.featureMeetups
       }
     },
     methods: {
       onLoadMeetup (id) {
-        this.$router.push('/meetup/' + id)
+        this.$router.push('/meetups/' + id)
       }
     }
   }
