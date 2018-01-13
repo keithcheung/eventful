@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   state: {
-    loadedMeetups: [
+    loadedEvents: [
       {
         imageUrl: 'https://lonelyplanetimages.imgix.net/mastheads/GettyImages-538096543_medium.jpg?sharp=10&vib=20&w=1200',
         id: 'fghjklkjh',
@@ -21,19 +21,19 @@ export const store = new Vuex.Store({
     ],
     user: {
       id: 'sajdk',
-      registeredMeetups: ['fghjklkjh']
+      registeredEvents: ['fghjklkjh']
     }
   },
   mutations: {
-    createMeetup (state, payload) {
-      // pushing new meetup to meetups obj which will be formatted in payload
-      state.loadedMeetups.push(payload)
+    createEvent (state, payload) {
+      // pushing new event to events obj which will be formatted in payload
+      state.loadedEvents.push(payload)
     }
   },
   actions: {
-    createMeetup ({commit}, payload) {
+    createEvent ({commit}, payload) {
       // since payload may have other properties we don't need (less efficient tho)
-      const meetup = {
+      const event = {
         title: payload.title,
         location: payload.location,
         imageUrl: payload.imageUrl,
@@ -41,29 +41,29 @@ export const store = new Vuex.Store({
         date: payload.date,
         id: 'asjljfksdjkaf'
       }
-      // reach out to firebase to store the meetup, get id, add to meetup
+      // reach out to firebase to store the event, get id, add to event
       // upload image, get image path as well
 
-      // calls the createMeetup above and pushs it to loaded meetups
-      commit('createMeetup', meetup)
+      // calls the createEvent above and pushs it to loaded events
+      commit('createEvent', event)
     }
   },
   getters: {
-    // gets all meetups
-    loadedMeetups (state) {
-      return state.loadedMeetups.sort((meetupA, meetupB) => {
-        return meetupA.date > meetupB.date
+    // gets all events
+    loadedEvents (state) {
+      return state.loadedEvents.sort((eventA, eventB) => {
+        return eventA.date > eventB.date
       })
     },
-    // display only 5 meetups
-    featureMeetups (state, getters) {
-      return getters.loadedMeetups.slice(0, 5)
+    // display only 5 events
+    featureEvents (state, getters) {
+      return getters.loadedEvents.slice(0, 5)
     },
-    // loading a single meetup
-    loadedMeetup (state) {
-      return (meetupId) => {
-        return state.loadedMeetups.find((meetup) => {
-          return meetup.id === meetupId
+    // loading a single event
+    loadedEvent (state) {
+      return (eventId) => {
+        return state.loadedEvents.find((event) => {
+          return event.id === eventId
         })
       }
     }

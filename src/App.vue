@@ -47,8 +47,8 @@
       return {
         sideNav: false,
         menuItems: [
-          { icon: 'view_list', title: 'View Meetup', link: '/meetups' },
-          { icon: 'room', title: 'Organize Meetup', link: '/meetup/create' },
+          { icon: 'view_list', title: 'View Event', link: '/events' },
+          { icon: 'room', title: 'Organize Event', link: '/event/create' },
           { icon: 'person', title: 'Profile', link: '/profile' },
           // Unauth shouldn't have a sign in or profile
           { icon: 'face', title: 'Sign Up', link: '/signup' },

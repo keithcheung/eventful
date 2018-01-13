@@ -2,7 +2,7 @@
   <v-container>
     <v-layout row wrap>
       <v-flex xs12 sm6 offset-sm3>
-        <h1>Creating a meetup</h1>
+        <h1>Creating a event</h1>
       </v-flex>
     </v-layout>
     <v-layout row>
@@ -62,7 +62,7 @@
             <v-flex xs12 sm6 offset-sm3>
               <v-btn 
               :disabled="!formIsValid"
-              type="submit">Create Meetup </v-btn>
+              type="submit">Create Event </v-btn>
             </v-flex>
           </v-layout>
         </form>
@@ -91,15 +91,15 @@ export default {
       if (!this.formIsValid) {
         return
       }
-      const meetupData = {
+      const eventData = {
         title: this.title,
         location: this.location,
         imageUrl: this.imageUrl,
         description: this.description
       }
-      // calls store's create meetup with meetupdata as param
-      this.$store.dispatch('createMeetup', meetupData)
-      this.$router.push('/meetups')
+      // calls store's create event with eventdata as param
+      this.$store.dispatch('createEvent', eventData)
+      this.$router.push('/events')
     }
   }
 }
