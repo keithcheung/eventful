@@ -1,6 +1,6 @@
 # Eventful
 
-> an application build with Vue + Vuetify + Firebase for car enthusiast
+> an application build with Vue + Vuetify + Firebase to easily create events 
 
 ## Build Setup
 
