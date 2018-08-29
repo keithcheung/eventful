@@ -45,7 +45,7 @@
   export default {
     data () {
       return {
-        sideNav: false,
+        sideNav: false
       }
     },
     computed: {
@@ -58,7 +58,7 @@
           menuItems = [
             { icon: 'view_list', title: 'View Event', link: '/events' },
             { icon: 'room', title: 'Organize Event', link: '/event/create' },
-            { icon: 'person', title: 'Profile', link: '/profile' },
+            { icon: 'person', title: 'Profile', link: '/profile' }
           ]
         }
         return menuItems

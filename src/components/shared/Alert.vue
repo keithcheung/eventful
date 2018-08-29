@@ -8,7 +8,7 @@
   export default {
     props: ['text'],
     methods: {
-      onClose() {
+      onClose () {
         this.$emit('dismissed')
       }
     }
