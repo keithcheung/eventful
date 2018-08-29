@@ -8,12 +8,13 @@ import router from './router'
 
 import { store } from './store'
 import DateFiler from './filters/date'
+import AlertComponent from './components/shared/Alert.vue'
 
 Vue.use(Vuetify)
 
 // Can use anywhere in our application
 Vue.filter('date', DateFiler)
-
+Vue.component('app-alert', AlertComponent)
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

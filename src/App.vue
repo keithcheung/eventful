@@ -69,3 +69,7 @@
     }
   }
 </script>
+
+<style media="screen" lang="stylus">
+  @import './stylus/main'
+</style>
