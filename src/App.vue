@@ -1,7 +1,7 @@
 <template>
   <v-app dark>
     <v-toolbar>
-      <v-toolbar-side-icon 
+      <v-toolbar-side-icon
         @click.native.stop="sideNav = !sideNav"
         class="hidden-sm-and-up"></v-toolbar-side-icon>
       <v-toolbar-title class="ml-4">
@@ -9,9 +9,9 @@
           </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-xs-only">
-        <v-btn 
-        flat 
-        v-for="item in menuItems" 
+        <v-btn
+        flat
+        v-for="item in menuItems"
         :key="item.title"
         router
         :to="item.link">
@@ -21,7 +21,7 @@
       </v-toolbar-items>
     </v-toolbar>
     <!-- For responsive design
-    <v-navigation-drawer 
+    <v-navigation-drawer
       v-model="sideNav">
       <v-list>
         <v-list-tile v-for="item in menuItems" :key="item.title">
@@ -46,14 +46,25 @@
     data () {
       return {
         sideNav: false,
-        menuItems: [
-          { icon: 'view_list', title: 'View Event', link: '/events' },
-          { icon: 'room', title: 'Organize Event', link: '/event/create' },
-          { icon: 'person', title: 'Profile', link: '/profile' },
-          // Unauth shouldn't have a sign in or profile
+      }
+    },
+    computed: {
+      menuItems () {
+        let menuItems = [
           { icon: 'face', title: 'Sign Up', link: '/signup' },
           { icon: 'lock_open', title: 'Sign In', link: '/signin' }
         ]
+        if (this.userIsAuthenticated) {
+          menuItems = [
+            { icon: 'view_list', title: 'View Event', link: '/events' },
+            { icon: 'room', title: 'Organize Event', link: '/event/create' },
+            { icon: 'person', title: 'Profile', link: '/profile' },
+          ]
+        }
+        return menuItems
+      },
+      userIsAuthenticated () {
+        return this.$store.getters.user !== null && this.$store.getters.user !== undefined
       }
     }
   }

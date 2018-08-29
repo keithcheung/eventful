@@ -68,6 +68,17 @@
     computed: {
       comparePasswords () {
         return this.password !== this.confirmPassword ? 'Passwords do not match' : ''
+      },
+      user () {
+        return this.$store.getters.user
+      }
+    },
+    // Basically a listener for this user value (if it ever changes)
+    watch: {
+      user (value) {
+        if (value !== null && value !== undefined) {
+          this.$router.push('/')
+        }
       }
     },
     methods: {

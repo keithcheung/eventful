@@ -25,10 +25,7 @@ export const store = new Vuex.Store({
       }
     ],
     // User will be from firebase as well
-    user: {
-      id: 'sajdk',
-      registeredEvents: ['fghjklkjh']
-    }
+    user: null
   },
   mutations: {
     createEvent (state, payload) {
@@ -61,7 +58,6 @@ export const store = new Vuex.Store({
       firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
         .then(
           user => {
-            debugger;
             const newUser = {
               id: user.user.uid,
               registeredEvents: []
@@ -95,6 +91,9 @@ export const store = new Vuex.Store({
           return event.id === eventId
         })
       }
+    },
+    user (state) {
+      return state.user
     }
   }
 })
