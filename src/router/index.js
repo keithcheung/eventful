@@ -9,7 +9,7 @@ import Signup from '@/components/user/SignUp'
 import Event from '@/components/event/Event'
 
 Vue.use(Router)
-
+// Storing all the routes
 export default new Router({
   routes: [
     {

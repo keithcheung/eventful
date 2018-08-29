@@ -7,14 +7,14 @@
     </v-layout>
     <v-layout row>
       <v-flex xs12>
-        <form @submit.prevent="onCreate">
+        <form @submit.prevent='onCreate'>
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
               <v-text-field
-                name="title"
-                label="Title"
-                id="title"
-                v-model="title"
+                name='title'
+                label='Title'
+                id='title'
+                v-model='title'
                 required>
               </v-text-field>
             </v-flex>
@@ -22,10 +22,10 @@
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
               <v-text-field
-                name="location"
-                label="Location"
-                id="location"
-                v-model="location"
+                name='location'
+                label='Location'
+                id='location'
+                v-model='location'
                 required>
               </v-text-field>
             </v-flex>
@@ -33,36 +33,52 @@
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
               <v-text-field
-                name="imageUrl"
-                label="Image URL"
-                id="image-url"
-                v-model="imageUrl"
+                name='imageUrl'
+                label='Image URL'
+                id='image-url'
+                v-model='imageUrl'
                 required>
               </v-text-field>
             </v-flex>
           </v-layout>
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
-              <img :src="imageUrl" height = "300">
+              <img :src='imageUrl' height = '300'>
             </v-flex>
           </v-layout>
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
               <v-text-field
-                name="description"
-                label="Description"
-                id="description"
-                v-model="description"
+                name='description'
+                label='Description'
+                id='description'
+                v-model='description'
                 required
                 multi-line>
               </v-text-field>
             </v-flex>
           </v-layout>
+
+          <v-layout row>
+                <v-flex xs12 sm6 offset-sm3>
+                <h4> Choose a Date and Time </h4>
+                </v-flex>
+          </v-layout>
+          <v-layout row class='mb-2'>
+                <v-flex xs12 sm6 offset-sm3>
+                <v-date-picker v-model='date'></v-date-picker>
+                </v-flex>
+          </v-layout>
+            <v-layout row>
+                <v-flex xs12 sm6 offset-sm3>
+                <v-time-picker v-model='time' format='24hr' ></v-time-picker>
+                </v-flex>
+          </v-layout>
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
-              <v-btn 
-              :disabled="!formIsValid"
-              type="submit">Create Event </v-btn>
+              <v-btn
+              :disabled='!formIsValid'
+              type='submit'>Create Event </v-btn>
             </v-flex>
           </v-layout>
         </form>
@@ -78,12 +94,35 @@ export default {
       title: '',
       location: '',
       imageUrl: '',
-      description: ''
+      description: '',
+      date: '',
+      time: new Date()
     }
   },
   computed: {
     formIsValid () {
-      return this.title !== '' && this.location !== '' && this.imageUrl !== '' && this.description !== ''
+      return (
+        this.title !== '' &&
+        this.location !== '' &&
+        this.imageUrl !== '' &&
+        this.description !== ''
+      )
+    },
+    submittableDateTime () {
+      // check date and format it to send as prop
+      const date = new Date(this.date)
+      if (typeof this.time === 'string') {
+        const hours = this.time.match(/^(\d+)/)[1]
+        const minutes = this.time.match(/:(\d+)/)[1]
+        date.setHours(hours)
+        date.setMinutes(minutes)
+      } else {
+        if (this.time) {
+          date.setHours(this.time.getHours())
+          date.setMinutes(this.time.getMinutes())
+        }
+      }
+      return date
     }
   },
   methods: {
@@ -95,7 +134,8 @@ export default {
         title: this.title,
         location: this.location,
         imageUrl: this.imageUrl,
-        description: this.description
+        description: this.description,
+        date: this.submittableDateTime
       }
       // calls store's create event with eventdata as param
       this.$store.dispatch('createEvent', eventData)

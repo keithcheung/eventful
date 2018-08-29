@@ -10,15 +10,20 @@ export const store = new Vuex.Store({
         imageUrl: 'https://lonelyplanetimages.imgix.net/mastheads/GettyImages-538096543_medium.jpg?sharp=10&vib=20&w=1200',
         id: 'fghjklkjh',
         title: 'New York',
-        date: '2017-07-17'
+        location: 'New York',
+        date: new Date(),
+        description: 'yay'
       },
       {
         imageUrl: 'http://www.seetorontonow.com/wp-content/uploads/2017/11/toronto-skyline-winter.jpg',
         id: 'haldjahfjf',
         title: 'Toronto',
-        date: '2017-08-29'
+        location: 'Toronto',
+        date: new Date(),
+        description: 'work'
       }
     ],
+    // User will be from firebase as well
     user: {
       id: 'sajdk',
       registeredEvents: ['fghjklkjh']

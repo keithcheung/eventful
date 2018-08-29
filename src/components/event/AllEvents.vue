@@ -15,7 +15,7 @@
                 <v-card-title primary-title>
                   <div>
                     <h3 class="white--text"> {{ event.title }}</h3>
-                    <div>{{ event.date }}</div>
+                    <div>{{ event.date | date}}</div>
                   </div>
                 </v-card-title>
                 <v-card-action>
@@ -43,4 +43,3 @@ export default {
   }
 }
 </script>
-

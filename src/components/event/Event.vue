@@ -10,8 +10,8 @@
             :src="event.imageUrl"
             height="450px"></v-card-media>
           <v-card-text>
-            <div>{{ event.date }}</div>
-            <div> Dummy text </div>
+            <div>{{ event.date | date}} - {{ event.location }} </div>
+            <div> {{ event.description }} </div>
           </v-card-text>
           <v-card-action>
             <v-spacer></v-spacer>

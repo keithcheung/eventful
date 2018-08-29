@@ -7,8 +7,12 @@ import App from './App'
 import router from './router'
 
 import { store } from './store'
+import DateFiler from './filters/date'
 
 Vue.use(Vuetify)
+
+// Can use anywhere in our application
+Vue.filter('date', DateFiler)
 
 Vue.config.productionTip = false
 
