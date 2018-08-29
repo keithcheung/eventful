@@ -5,7 +5,7 @@
         <v-card>
           <v-card-text>
             <v-container>
-              <form>
+              <form @submit.prevent="onSignup">
                 <v-layout row>
                   <v-flex xs12>
                     <v-text-field
@@ -73,7 +73,7 @@
     methods: {
       onSignup () {
         // Use VueX to store in website application as well
-        console.log({email: this.email, password: this.password, confirmPassword: this.confirmPassword})
+        this.$store.dispatch('signUserUp', {email: this.email, password: this.password})
       }
     }
   }
