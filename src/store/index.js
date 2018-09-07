@@ -30,6 +30,9 @@ export const store = new Vuex.Store({
     error: false
   },
   mutations: {
+    setLoadedEvents (state, payload) {
+      state.loadedEvents = payload
+    },
     createEvent (state, payload) {
       // pushing new event to events obj which will be formatted in payload
       state.loadedEvents.push(payload)
@@ -49,6 +52,31 @@ export const store = new Vuex.Store({
     }
   },
   actions: {
+    loadEvents ({commit}) {
+      commit('setLoading', true)
+      firebase.database().ref('events').once('value')
+        .then((data) => {
+          const events = []
+          const obj = data.val()
+          for (let key in obj) {
+            events.push({
+              id: key,
+              title: obj[key].title,
+              description: obj[key].description,
+              imageUrl: obj[key].imageUrl,
+              dat: obj[key].date
+            })
+          }
+          commit('setLoadedEvents', events)
+          commit('setLoading', false)
+        })
+        .catch(
+          (error) => {
+            console.log(error)
+            commit('setLoading', true)
+          }
+        )
+    },
     createEvent ({commit}, payload) {
       // since payload may have other properties we don't need (less efficient tho)
       const event = {
@@ -56,14 +84,24 @@ export const store = new Vuex.Store({
         location: payload.location,
         imageUrl: payload.imageUrl,
         description: payload.description,
-        date: payload.date,
-        id: 'asjljfksdjkaf'
+        date: payload.date.toISOString()
       }
+      firebase.database().ref('events').push(event)
+        .then((data) => {
+          const key = data.key
+
+          console.log(data)
+          commit('createEvent', {
+            ...event,
+            id: key
+          })
+        })
+        .catch((error) => {
+          console.log(error)
+        })
       // reach out to firebase to store the event, get id, add to event
       // upload image, get image path as well
-
       // calls the createEvent above and pushs it to loaded events
-      commit('createEvent', event)
     },
     signUserUp ({commit}, payload) {
       // commit calls the mutations

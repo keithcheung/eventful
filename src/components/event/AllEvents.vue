@@ -18,12 +18,12 @@
                     <div>{{ event.date | date}}</div>
                   </div>
                 </v-card-title>
-                <v-card-action>
+                <v-card-actions>
                   <v-btn flat :to="'/events/' + event.id">
                     <v-icon left>pageview</v-icon>
                     View Event
                   </v-btn>
-                </v-card-action>
+                </v-card-actions>
               </v-flex>
 
             </v-layout>

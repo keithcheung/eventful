@@ -13,10 +13,10 @@
             <div>{{ event.date | date}} - {{ event.location }} </div>
             <div> {{ event.description }} </div>
           </v-card-text>
-          <v-card-action>
+          <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn>Register</v-btn>
-          </v-card-action>
+          </v-card-actions>
         </v-card>
       </v-flex>
     </v-layout>

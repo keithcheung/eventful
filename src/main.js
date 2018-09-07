@@ -31,5 +31,7 @@ new Vue({
       projectId: 'eventful-ffba5',
       storageBucket: 'eventful-ffba5.appspot.com'
     })
+
+    this.$store.dispatch('loadEvents')
   }
 })
