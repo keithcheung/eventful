@@ -64,7 +64,8 @@ export const store = new Vuex.Store({
               title: obj[key].title,
               description: obj[key].description,
               imageUrl: obj[key].imageUrl,
-              dat: obj[key].date
+              dat: obj[key].date,
+              creatorId: obj[key].creatorId
             })
           }
           commit('setLoadedEvents', events)
@@ -77,14 +78,15 @@ export const store = new Vuex.Store({
           }
         )
     },
-    createEvent ({commit}, payload) {
+    createEvent ({commit, getters}, payload) {
       // since payload may have other properties we don't need (less efficient tho)
       const event = {
         title: payload.title,
         location: payload.location,
         imageUrl: payload.imageUrl,
         description: payload.description,
-        date: payload.date.toISOString()
+        date: payload.date.toISOString(),
+        creatorId: getters.user.id
       }
       firebase.database().ref('events').push(event)
         .then((data) => {
@@ -152,7 +154,7 @@ export const store = new Vuex.Store({
     autoSignIn ({commit}, payload) {
       commit('setUser', {id: payload.uid, registeredEvents: []})
     },
-    logout({commit}) {
+    logout ({commit}) {
       firebase.auth().signOut()
       commit('setUser', null)
     },
