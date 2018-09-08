@@ -18,6 +18,13 @@
           <v-icon left>{{ item.icon }}</v-icon>
           {{ item.title }}
         </v-btn>
+        <v-btn
+          v-if="userIsAuthenticated"
+          flat
+          @click="onLogout">
+          <v-icon left>exit_to_app</v-icon>
+          {{ "Logout" }}
+        </v-btn>
       </v-toolbar-items>
     </v-toolbar>
     <!-- For responsive design
@@ -64,6 +71,11 @@
       },
       userIsAuthenticated () {
         return this.$store.getters.user !== null && this.$store.getters.user !== undefined
+      }
+    },
+    methods: {
+      onLogout () {
+        this.$store.dispatch('logout')
       }
     }
   }
