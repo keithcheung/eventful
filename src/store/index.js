@@ -149,6 +149,9 @@ export const store = new Vuex.Store({
           }
         )
     },
+    autoSignIn ({commit}, payload) {
+      commit('setUser', {id: payload.uid, registeredEvents: []})
+    },
     clearError ({commit}) {
       commit('clearError')
     }

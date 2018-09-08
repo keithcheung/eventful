@@ -31,7 +31,11 @@ new Vue({
       projectId: 'eventful-ffba5',
       storageBucket: 'eventful-ffba5.appspot.com'
     })
-
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.$store.dispatch('autoSignIn', user)
+      }
+    })
     this.$store.dispatch('loadEvents')
   }
 })
