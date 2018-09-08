@@ -7,6 +7,7 @@ import Profile from '@/components/user/Profile'
 import Signin from '@/components/user/SignIn'
 import Signup from '@/components/user/SignUp'
 import Event from '@/components/event/Event'
+import AuthGuard from './auth-guard'
 
 Vue.use(Router)
 // Storing all the routes
@@ -25,7 +26,8 @@ export default new Router({
     {
       path: '/event/create',
       name: 'CreateEvent',
-      component: CreateEvent
+      component: CreateEvent,
+      beforeEnter: AuthGuard
     },
     {
       path: '/events/:id',
@@ -36,7 +38,8 @@ export default new Router({
     {
       path: '/profile',
       name: 'Profile',
-      component: Profile
+      component: Profile,
+      beforeEnter: AuthGuard
     },
     {
       path: '/signup',
