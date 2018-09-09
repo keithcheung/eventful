@@ -29,7 +29,7 @@ new Vue({
       authDomain: 'eventful-ffba5.firebaseapp.com',
       databaseURL: 'https://eventful-ffba5.firebaseio.com',
       projectId: 'eventful-ffba5',
-      storageBucket: 'eventful-ffba5.appspot.com'
+      storageBucket: 'gs://eventful-ffba5.appspot.com'
     })
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {

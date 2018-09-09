@@ -93,7 +93,7 @@ export default {
     return {
       title: '',
       location: '',
-      imageUrl: '',
+      imageUrl: this.image,
       description: '',
       date: '',
       time: new Date(),
@@ -131,10 +131,13 @@ export default {
       if (!this.formIsValid) {
         return
       }
+      if (!this.image) {
+        return
+      }
       const eventData = {
         title: this.title,
         location: this.location,
-        imageUrl: this.imageUrl,
+        image: this.image,
         description: this.description,
         date: this.submittableDateTime
       }

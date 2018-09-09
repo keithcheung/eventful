@@ -64,7 +64,7 @@ export const store = new Vuex.Store({
               title: obj[key].title,
               description: obj[key].description,
               imageUrl: obj[key].imageUrl,
-              dat: obj[key].date,
+              date: obj[key].date,
               creatorId: obj[key].creatorId
             })
           }
@@ -83,18 +83,32 @@ export const store = new Vuex.Store({
       const event = {
         title: payload.title,
         location: payload.location,
-        imageUrl: payload.imageUrl,
         description: payload.description,
         date: payload.date.toISOString(),
         creatorId: getters.user.id
       }
+      let imageUrl
+      let key
       firebase.database().ref('events').push(event)
         .then((data) => {
-          const key = data.key
-
-          console.log(data)
+          key = data.key
+          return key
+        })
+        .then(key => {
+          const fileName = payload.image.name
+          const ext = fileName.slice(fileName.lastIndexOf('.'))
+          return firebase.storage().ref('events/' + key + ext).put(payload.image)
+        })
+        .then(fileData => {
+          return fileData.ref.getDownloadURL()
+        })
+        .then(imageUrl => {
+          return firebase.database().ref('events').child(key).update({imageUrl: imageUrl})
+        })
+        .then(() => {
           commit('createEvent', {
             ...event,
+            imageUrl: imageUrl,
             id: key
           })
         })
