@@ -32,13 +32,13 @@
           </v-layout>
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
-              <v-text-field
-                name='imageUrl'
-                label='Image URL'
-                id='image-url'
-                v-model='imageUrl'
-                required>
-              </v-text-field>
+              <v-btn raised @click="onFileSelect">Upload Image</v-btn>
+              <input
+                type="file"
+                style="display: none"
+                ref="fileInput"
+                accept="image/*"
+                @change="onFilePicked"/>
             </v-flex>
           </v-layout>
           <v-layout row>
@@ -96,7 +96,8 @@ export default {
       imageUrl: '',
       description: '',
       date: '',
-      time: new Date()
+      time: new Date(),
+      image: null
     }
   },
   computed: {
@@ -140,6 +141,23 @@ export default {
       // calls store's create event with eventdata as param
       this.$store.dispatch('createEvent', eventData)
       this.$router.push('/events')
+    },
+    onFileSelect () {
+      this.$refs.fileInput.click()
+    },
+    onFilePicked (event) {
+      const files = event.target.files
+      const fileName = files[0].name
+      if (fileName.lastIndexOf('.') <= 0) {
+        return alert('Please add a valid file!')
+      }
+      const fileReader = new FileReader()
+      // result is image as text
+      fileReader.addEventListener('load', () => {
+        this.imageUrl = fileReader.result
+      })
+      fileReader.readAsDataURL(files[0])
+      this.image = files[0]
     }
   }
 }
