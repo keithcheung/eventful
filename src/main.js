@@ -9,12 +9,18 @@ import router from './router'
 import { store } from './store'
 import DateFiler from './filters/date'
 import AlertComponent from './components/shared/Alert.vue'
+import EditEventDetailsModal from './components/event/edit/EditEventDetailsModal.vue'
+import EditEventDateModal from './components/event/edit/EditEventDateModal.vue'
+import EditEventTimeModal from './components/event/edit/EditEventTimeModal.vue'
 
 Vue.use(Vuetify)
 
 // Can use anywhere in our application
 Vue.filter('date', DateFiler)
 Vue.component('app-alert', AlertComponent)
+Vue.component('app-edit-event-modal', EditEventDetailsModal)
+Vue.component('app-edit-date-modal', EditEventDateModal)
+Vue.component('app-edit-time-modal', EditEventTimeModal)
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

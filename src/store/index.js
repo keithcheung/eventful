@@ -37,6 +37,20 @@ export const store = new Vuex.Store({
       // pushing new event to events obj which will be formatted in payload
       state.loadedEvents.push(payload)
     },
+    updateEvent (state, payload) {
+      const event = state.loadedEvents.find(event => {
+        return event.id === payload.id
+      })
+      if (payload.title) {
+        event.title = payload.title
+      }
+      if (payload.description) {
+        event.description = payload.description
+      }
+      if (payload.date) {
+        event.date = payload.date
+      }
+    },
     // this refers to the actual vuex state
     setUser (state, payload) {
       state.user = payload
@@ -52,7 +66,7 @@ export const store = new Vuex.Store({
     }
   },
   actions: {
-    loadEvents ({commit}) {
+    loadEvents ({ commit }) {
       commit('setLoading', true)
       firebase.database().ref('events').once('value')
         .then((data) => {
@@ -65,6 +79,7 @@ export const store = new Vuex.Store({
               description: obj[key].description,
               imageUrl: obj[key].imageUrl,
               date: obj[key].date,
+              location: obj[key].location,
               creatorId: obj[key].creatorId
             })
           }
@@ -78,7 +93,7 @@ export const store = new Vuex.Store({
           }
         )
     },
-    createEvent ({commit, getters}, payload) {
+    createEvent ({ commit, getters }, payload) {
       // since payload may have other properties we don't need (less efficient tho)
       const event = {
         title: payload.title,
@@ -103,7 +118,7 @@ export const store = new Vuex.Store({
           return fileData.ref.getDownloadURL()
         })
         .then(imageUrl => {
-          return firebase.database().ref('events').child(key).update({imageUrl: imageUrl})
+          return firebase.database().ref('events').child(key).update({ imageUrl: imageUrl })
         })
         .then(() => {
           commit('createEvent', {
@@ -119,7 +134,30 @@ export const store = new Vuex.Store({
       // upload image, get image path as well
       // calls the createEvent above and pushs it to loaded events
     },
-    signUserUp ({commit}, payload) {
+    updateEvent ({commit}, payload) {
+      commit('setLoading', true)
+      const updatedEvent = {}
+      if (payload.title) {
+        updatedEvent.title = payload.title
+      }
+      if (payload.description) {
+        updatedEvent.description = payload.description
+      }
+      if (payload.date) {
+        updatedEvent.date = payload.date
+      }
+      firebase.database().ref('events').child(payload.id).update(updatedEvent)
+        .then(() => {
+          updatedEvent.id = payload.id
+          commit('setLoading', false)
+          commit('updateEvent', updatedEvent)
+        })
+        .catch(error => {
+          console.log(error)
+          commit('setLoading', false)
+        })
+    },
+    signUserUp ({ commit }, payload) {
       // commit calls the mutations
       commit('setLoading', true)
       commit('clearError')
@@ -143,7 +181,7 @@ export const store = new Vuex.Store({
           }
         )
     },
-    signUserIn ({commit}, payload) {
+    signUserIn ({ commit }, payload) {
       commit('setLoading', true)
       commit('clearError')
       firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
@@ -165,14 +203,14 @@ export const store = new Vuex.Store({
           }
         )
     },
-    autoSignIn ({commit}, payload) {
-      commit('setUser', {id: payload.uid, registeredEvents: []})
+    autoSignIn ({ commit }, payload) {
+      commit('setUser', { id: payload.uid, registeredEvents: [] })
     },
-    logout ({commit}) {
+    logout ({ commit }) {
       firebase.auth().signOut()
       commit('setUser', null)
     },
-    clearError ({commit}) {
+    clearError ({ commit }) {
       commit('clearError')
     }
   },
