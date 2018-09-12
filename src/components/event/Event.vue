@@ -33,7 +33,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn>Register</v-btn>
+            <app-register-modal :eventId="event.id"></app-register-modal>
           </v-card-actions>
         </v-card>
       </v-flex>

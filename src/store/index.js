@@ -30,6 +30,19 @@ export const store = new Vuex.Store({
     error: false
   },
   mutations: {
+    registerUserForEvent (state, payload) {
+      const id = payload.id
+      if (state.user.registeredEvents.findIndex(event => event.id === id) >= 0) {
+        return
+      }
+      state.user.registeredEvents.push(id)
+      state.user.fbKeys[id] = payload.fbKey
+    },
+    unregisterUserForEvent (state, payload) {
+      const registeredEvents = state.user.registeredEvents
+      registeredEvents.splice(registeredEvents.findIndex(event => event.id === payload), 1)
+      Reflect.deleteProperty(state.user.fbKeys, payload)
+    },
     setLoadedEvents (state, payload) {
       state.loadedEvents = payload
     },
@@ -66,6 +79,37 @@ export const store = new Vuex.Store({
     }
   },
   actions: {
+    registerUserForEvent ({commit, getters}, payload) {
+      commit('setLoading', true)
+      const user = getters.user
+      firebase.database().ref('/users/' + user.id).child('/registrations/')
+        .push(payload)
+        .then(data => {
+          commit('setLoading', false)
+          commit('registerUserForEvent', {id: payload, fbKey: data.key})
+        })
+        .catch(error => {
+          console.log(error)
+          commit('setLoading', false)
+        })
+    },
+    unregisterUserForEvent ({commit, getters}, payload) {
+      commit('setLoading', true)
+      const user = getters.user
+      if (!user.fbKeys) {
+        return
+      }
+      const fbKey = user.fbKeys[payload]
+      firebase.database().ref('/users/' + user.id + '/registrations/').child(fbKey).remove()
+        .then(() => {
+          commit('setLoading', false)
+          commit('unregisterUserForEvent', payload)
+        })
+        .catch(error => {
+          console.log(error)
+          commit('setLoading', false)
+        })
+    },
     loadEvents ({ commit }) {
       commit('setLoading', true)
       firebase.database().ref('events').once('value')
@@ -167,7 +211,8 @@ export const store = new Vuex.Store({
             commit('setLoading', false)
             const newUser = {
               id: user.user.uid,
-              registeredEvents: []
+              registeredEvents: [],
+              fbKeys: {}
             }
             // calls the mutation
             commit('setUser', newUser)
@@ -190,7 +235,8 @@ export const store = new Vuex.Store({
             commit('setLoading', false)
             const newUser = {
               id: user.user.uid,
-              registeredEvents: []
+              registeredEvents: [],
+              fbKeys: {}
             }
             commit('setUser', newUser)
           }
@@ -204,7 +250,7 @@ export const store = new Vuex.Store({
         )
     },
     autoSignIn ({ commit }, payload) {
-      commit('setUser', { id: payload.uid, registeredEvents: [] })
+      commit('setUser', { id: payload.uid, registeredEvents: [], fbKeys: {} })
     },
     logout ({ commit }) {
       firebase.auth().signOut()
