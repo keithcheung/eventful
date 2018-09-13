@@ -33,7 +33,9 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <app-register-modal :eventId="event.id"></app-register-modal>
+            <app-register-modal
+              :eventId="event.id"
+              v-if="userIsAuthenticated && !userIsCreator"></app-register-modal>
           </v-card-actions>
         </v-card>
       </v-flex>
