@@ -2,6 +2,10 @@
 
 > an application build with Vue + Vuetify + Firebase to easily create events 
 
+This is an image from the app. You can check it out yourself at https://uweventful.herokuapp.com/
+<img width="1279" alt="Screen Shot 2019-05-28 at 9 44 05 PM" src="https://user-images.githubusercontent.com/16724445/58523245-bcd7a180-8191-11e9-92e3-0bf3548ba355.png">
+
+
 ## Build Setup
 
 ``` bash
